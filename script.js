@@ -4,48 +4,39 @@ import * as THREE from "./three.module.min.js";
 // Scene
 const scene = new THREE.Scene();
 
-// Groupings
-const group = new THREE.Group();
-
 // Mesh
 const geometry = new THREE.BoxGeometry(1, 1, 1);
 const material = new THREE.MeshBasicMaterial({ color: "purple" });
 const mesh = new THREE.Mesh(geometry, material);
+scene.add(mesh);
 
-mesh.position.z = 1;
-
-// Mesh 2
-const geometryT = new THREE.BoxGeometry(1, 1, 1);
-const materialT = new THREE.MeshBasicMaterial({ color: "green" });
-const meshT = new THREE.Mesh(geometryT, materialT);
-meshT.position.y = 2;
-
-group.add(mesh, meshT);
-group.position.x = 1;
-scene.add(group);
-
-// Axes Helper
-const axesHelper = new THREE.AxesHelper(3);
-scene.add(axesHelper);
-
+// Camera
 const aspect = {
   width: window.innerWidth,
   height: window.innerHeight,
 };
 
-const camera = new THREE.PerspectiveCamera(
-  75,
-  aspect.width / aspect.height,
-  1,
-  2000
-);
-camera.position.z = 4;
-camera.position.x = 1;
-camera.position.y = 1;
+const camera = new THREE.PerspectiveCamera(75, aspect.width / aspect.height);
+
+camera.position.z = 3;
 scene.add(camera);
 
 // Renderer
-const canvas = document.querySelector(".draw"); // select canvas element
-const renderer = new THREE.WebGLRenderer({ canvas: canvas }); // add WebGLRenderer
-renderer.setSize(aspect.width, aspect.height); // renderer size
-renderer.render(scene, camera); // display what the camera in the scene captured
+const canvas = document.querySelector(".draw"); // Select the canvas
+const renderer = new THREE.WebGLRenderer({ canvas: canvas }); // Add WebGL renderer
+renderer.setSize(aspect.width, aspect.height); // Renderer size
+
+// Clock class - used for making animations the same in all devices (with different fps)
+const clock = new THREE.Clock();
+
+const animate = () => {
+  // Get elapsed time
+  const elapsedTime = clock.getElapsedTime();
+  // Update rotation on x-axis
+  mesh.rotation.y = elapsedTime * Math.PI;
+
+  renderer.render(scene, camera); // draw what the camera captured
+  window.requestAnimationFrame(animate);
+};
+animate();
+// function will get called depending on the fps (frames per second) of the device
