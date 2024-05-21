@@ -1,4 +1,5 @@
-import * as THREE from "./three.module.min.js";
+import * as THREE from "three";
+import "./styles.css";
 // Scene Mesh Camera Renderer
 
 // Scene
