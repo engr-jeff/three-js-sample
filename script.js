@@ -4,9 +4,27 @@ import * as THREE from "./three.module.min.js";
 // Scene
 const scene = new THREE.Scene();
 
-// Mesh
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: "purple" });
+// Mesh - OLD
+// const geometry = new THREE.BoxGeometry(1, 1, 1);
+// const material = new THREE.MeshBasicMaterial({ color: "purple" });
+// const mesh = new THREE.Mesh(geometry, material);
+// scene.add(mesh);
+
+// Mesh - NEW
+const geometry = new THREE.BoxBufferGeometry();
+// const geometry = new THREE.BufferGeometry();
+// const verticesArray = new Float32Array([0, 0, 0, 0, 1, 0, 1, 0, 0]);
+
+// // separate the 3 values and convert to attributes
+// const positionsAttribute = new THREE.BufferAttribute(verticesArray, 3);
+// geometry.setAttribute("position", positionsAttribute);
+// console.log(geometry);
+
+const material = new THREE.MeshBasicMaterial({
+  color: "purple",
+  wireframe: true,
+});
+
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
 
